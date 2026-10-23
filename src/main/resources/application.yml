@@ -6,6 +6,12 @@ spring:
     username: ${DATABASE_USER:postgres}
     password: ${DATABASE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 1200000
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,8 +20,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  # Transform DATABASE_URL if it doesn't start with jdbc:
-  # This is handled by spring.properties.prepend if needed, but let's be explicit
+  # Perfil Spring activo (leído de SPRING_PROFILES_ACTIVE env var)
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
 
 aws:
   cognito:
@@ -35,3 +42,11 @@ app:
     exposed-headers: ${CORS_EXPOSED_HEADERS:Authorization,Content-Type}
     allow-credentials: ${CORS_ALLOW_CREDENTIALS:false}
     max-age: ${CORS_MAX_AGE:3600}
+
+  # Configuración Notificaciones (ntfy)
+  notification:
+    base-url: ${NTFY_BASE_URL:https://ntfy.sh}
+    topic-prefix: ${NTFY_TOPIC_PREFIX:app_vibe_}
+    topic-hash-length: ${NTFY_TOPIC_HASH_LENGTH:20}
+    connect-timeout: ${NTFY_CONNECT_TIMEOUT:10}
+    read-timeout: ${NTFY_READ_TIMEOUT:30}

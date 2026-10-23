@@ -1,4 +1,4 @@
-package com.duoc.cursos.exception;
+package com.duoc.cursos.config;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -93,6 +93,17 @@ public class GlobalExceptionHandler {
                 error.getDetalles().put(err.getField(), err.getDefaultMessage())
         );
         return ResponseEntity.badRequest().body(error);
+    }
+
+    // --- Excepciones de negocio propias ---
+    @ExceptionHandler(com.duoc.cursos.common.exception.BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusiness(com.duoc.cursos.common.exception.BusinessException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        if ("RESOURCE_NOT_FOUND".equals(ex.getCode())) {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return ResponseEntity.status(status)
+                .body(new ErrorResponse(ex.getCode(), ex.getMessage(), status.value()));
     }
 
     // --- Genérica ---

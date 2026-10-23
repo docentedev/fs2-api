@@ -38,6 +38,11 @@ public class CursosApplication {
 					System.setProperty(k, v.toString());
 				}
 			});
+			// Also set the Spring security oauth2 property using the correct Spring property name
+			if (dotenv.entries().stream().anyMatch(e -> "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI".equals(e.getKey()))) {
+				String val = dotenv.get("SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI");
+				System.setProperty("spring.security.oauth2.resourceserver.jwt.issuer-uri", val);
+			}
 			System.out.println("✅ Dotenv cargado: " + envMap.size() + " variables desde " + userDir + "/.env");
 		} else {
 			System.out.println("⚠️  No se encontró .env en " + userDir);

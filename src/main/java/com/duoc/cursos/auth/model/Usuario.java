@@ -1,4 +1,4 @@
-package com.duoc.cursos.model;
+package com.duoc.cursos.auth.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

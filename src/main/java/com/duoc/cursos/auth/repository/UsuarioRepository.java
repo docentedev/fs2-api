@@ -1,6 +1,6 @@
-package com.duoc.cursos.repository;
+package com.duoc.cursos.auth.repository;
 
-import com.duoc.cursos.model.Usuario;
+import com.duoc.cursos.auth.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

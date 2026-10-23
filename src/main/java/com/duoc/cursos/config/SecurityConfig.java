@@ -1,9 +1,13 @@
 package com.duoc.cursos.config;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,14 +29,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/auth/**", "/api/health").permitAll()
+                .requestMatchers("/api/auth/**", "/api/health", "/api/notificar", "/api/notificar/**").permitAll()
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form.disable())
-            .httpBasic(httpBasic -> httpBasic.disable());
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {}))
+            .formLogin(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
@@ -47,7 +52,7 @@ public class SecurityConfig {
             configuration.setAllowedMethods(List.of());
             return new UrlBasedCorsConfigurationSource() {
                 @Override
-                public CorsConfiguration getCorsConfiguration(jakarta.servlet.http.HttpServletRequest request) {
+                public CorsConfiguration getCorsConfiguration(@NonNull HttpServletRequest request) {
                     return configuration;
                 }
             };

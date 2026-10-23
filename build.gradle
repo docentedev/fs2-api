@@ -22,6 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	runtimeOnly 'org.postgresql:postgresql'
 	// AWS SDK v2 - Cognito Identity Provider
 	implementation 'software.amazon.awssdk:cognitoidentityprovider:2.29.30'

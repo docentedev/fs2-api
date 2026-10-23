@@ -1,12 +1,17 @@
 package com.duoc.cursos.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+@Setter
+@Getter
 @Component
 @ConfigurationProperties(prefix = "app.cors")
 public class CorsProperties {
 
+    // Getters y Setters
     /**
      * Habilita o deshabilita CORS completamente.
      * Cuando pasa por API Gateway, se puede deshabilitar poniendo este valor en false.
@@ -15,7 +20,7 @@ public class CorsProperties {
 
     /**
      * Orígenes permitidos. Usa "*" para permitir todos.
-     * Ejemplo: "https://app.midominio.com,https://otro.dominio.com"
+     * Ejemplo: "<a href="https://app.midominio.com,https://otro.dominio.com">...</a>"
      */
     private String allowedOrigins = "*";
 
@@ -45,60 +50,4 @@ public class CorsProperties {
      */
     private long maxAge = 3600;
 
-    // Getters y Setters
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getAllowedOrigins() {
-        return allowedOrigins;
-    }
-
-    public void setAllowedOrigins(String allowedOrigins) {
-        this.allowedOrigins = allowedOrigins;
-    }
-
-    public String getAllowedMethods() {
-        return allowedMethods;
-    }
-
-    public void setAllowedMethods(String allowedMethods) {
-        this.allowedMethods = allowedMethods;
-    }
-
-    public String getAllowedHeaders() {
-        return allowedHeaders;
-    }
-
-    public void setAllowedHeaders(String allowedHeaders) {
-        this.allowedHeaders = allowedHeaders;
-    }
-
-    public String getExposedHeaders() {
-        return exposedHeaders;
-    }
-
-    public void setExposedHeaders(String exposedHeaders) {
-        this.exposedHeaders = exposedHeaders;
-    }
-
-    public boolean isAllowCredentials() {
-        return allowCredentials;
-    }
-
-    public void setAllowCredentials(boolean allowCredentials) {
-        this.allowCredentials = allowCredentials;
-    }
-
-    public long getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(long maxAge) {
-        this.maxAge = maxAge;
-    }
 }
