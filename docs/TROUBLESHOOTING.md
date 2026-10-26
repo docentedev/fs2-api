@@ -396,8 +396,12 @@ producción. La URL directa de la EC2 solo para desarrollo local.
 
 **Deploy del backend (rebuild + upload + restart):**
 ```bash
-cd /Users/.../cursos && ./deploy_ec2.sh
+cd /Users/.../cursos && ./deploy_ec2.sh          # macOS / Linux
+powershell -ExecutionPolicy Bypass -File .\deploy_ec2.ps1   # Windows (PowerShell)
 ```
+La version Windows (`deploy_ec2.ps1`) requiere: AWS CLI, JDK 21 (JAVA_HOME),
+OpenSSH client y curl.exe (incluidos en Win10/11). Ajusta los permisos de la
+llave PEM con ACLs (`icacls ... /inheritance:r /grant:r "usuario:R"`), no chmod.
 Revisa SIEMPRE el log de arranque en busca de WARNs de DDL:
 ```bash
 ssh -i mi-llave-privada.pem ec2-user@77.113.69.25 "grep -i 'error\|warn' app.log | tail"
