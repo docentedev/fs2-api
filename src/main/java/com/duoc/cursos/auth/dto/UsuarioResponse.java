@@ -11,4 +11,5 @@ public class UsuarioResponse {
     private String email;
     private String nombre;
     private Set<String> roles;
+    private Boolean activo;
 }

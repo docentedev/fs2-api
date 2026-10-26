@@ -17,5 +17,7 @@ public class RegistroRequest {
     @NotBlank @Size(max = 100)
     private String nombre;
 
+    private String telefono;
+
     private Set<String> roles;
 }

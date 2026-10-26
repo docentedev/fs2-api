@@ -43,6 +43,14 @@ public class CursosApplication {
 				String val = dotenv.get("SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI");
 				System.setProperty("spring.security.oauth2.resourceserver.jwt.issuer-uri", val);
 			}
+			// Exponer credenciales AWS con los nombres que espera el AWS SDK
+			// (SystemPropertyCredentialsProvider), p.ej. para APIs admin de Cognito
+			String awsAk = dotenv.get("AWS_ACCESS_KEY_ID");
+			String awsSk = dotenv.get("AWS_SECRET_ACCESS_KEY");
+			if (awsAk != null && !awsAk.isBlank() && System.getProperty("aws.accessKeyId") == null) {
+				System.setProperty("aws.accessKeyId", awsAk);
+				System.setProperty("aws.secretAccessKey", awsSk != null ? awsSk : "");
+			}
 			System.out.println("✅ Dotenv cargado: " + envMap.size() + " variables desde " + userDir + "/.env");
 		} else {
 			System.out.println("⚠️  No se encontró .env en " + userDir);

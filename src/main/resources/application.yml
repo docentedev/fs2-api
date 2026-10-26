@@ -30,6 +30,9 @@ aws:
     user-pool-id: ${AWS_COGNITO_USER_POOL_ID:us-east-1_xxxxxxxxx}
     client-id: ${AWS_COGNITO_CLIENT_ID:xxxxxxxxxxxxxxxxxxxxxxxxxx}
     client-secret: ${AWS_COGNITO_CLIENT_SECRET:}
+  # Credenciales para APIs admin de Cognito (EC2 sin IAM role)
+  access-key-id: ${AWS_ACCESS_KEY_ID:}
+  secret-access-key: ${AWS_SECRET_ACCESS_KEY:}
 
 # Configuración CORS
 # Habilitar/deshabilitar CORS completamente (útil para deshabilitar cuando pasa por API Gateway)

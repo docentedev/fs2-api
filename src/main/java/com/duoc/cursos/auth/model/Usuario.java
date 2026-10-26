@@ -27,4 +27,7 @@ public class Usuario {
     )
     @Column(name = "rol", nullable = false)
     private Set<String> roles = new HashSet<>();
+
+    @Column(nullable = false)
+    private Boolean activo = true;
 }

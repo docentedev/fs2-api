@@ -3,10 +3,14 @@ package com.duoc.cursos.auth.controller;
 import com.duoc.cursos.auth.dto.*;
 import com.duoc.cursos.auth.service.AuthService;
 import com.duoc.cursos.common.dto.ApiResponse;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import software.amazon.awssdk.services.cognitoidentityprovider.model.AuthenticationResultType;
 
 @RestController
@@ -17,8 +21,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/registro")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('ADMIN')")
     public ResponseEntity<ApiResponse<UsuarioResponse>> registrar(@Valid @RequestBody RegistroRequest req) {
-        UsuarioResponse usuario = authService.registrar(req.getEmail(), req.getPassword(), req.getNombre(), req.getRoles());
+        UsuarioResponse usuario = authService.registrar(req.getEmail(), req.getPassword(), req.getNombre(), req.getRoles(), req.getTelefono());
         return ResponseEntity.ok(ApiResponse.ok(usuario, "Usuario registrado exitosamente"));
     }
 
